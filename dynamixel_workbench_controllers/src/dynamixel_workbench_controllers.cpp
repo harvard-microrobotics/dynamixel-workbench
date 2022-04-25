@@ -609,11 +609,23 @@ void DynamixelController::writeCallback(const ros::TimerEvent&)
       ROS_ERROR("%s", log);
     }
 
-    position_cnt++;
-    if (position_cnt >= jnt_tra_msg_->points[point_cnt].positions.size())
-    {
+    ROS_INFO("Point Counter: %d --- Position Counter: %d", point_cnt, position_cnt);
+
+    /*
+    std::string info_str = "";
+    for (uint8_t index = 0; index < id_cnt; index++){
+       info_str += std::to_string(dynamixel_position[index]); //"%f,",dynamixel_position[index]);
+    }
+    
+    ROS_INFO("syncWrite executed correclty. Message sent: [" + info_str+ "]");
+
+    */
+
+    //position_cnt++;
+    //if (position_cnt >= jnt_tra_msg_->points[point_cnt].positions.size())
+    //{
       point_cnt++;
-      position_cnt = 0;
+      //position_cnt = 0;
       if (point_cnt >= jnt_tra_msg_->points.size())
       {
         is_moving_ = false;
@@ -622,7 +634,7 @@ void DynamixelController::writeCallback(const ros::TimerEvent&)
 
         ROS_INFO("Complete Execution");
       }
-    }
+    //}
   }
 
 #ifdef DEBUG
