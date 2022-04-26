@@ -609,17 +609,9 @@ void DynamixelController::writeCallback(const ros::TimerEvent&)
       ROS_ERROR("%s", log);
     }
 
-    ROS_INFO("Point Counter: %d --- Position Counter: %d", point_cnt, position_cnt);
-
-    /*
-    std::string info_str = "";
-    for (uint8_t index = 0; index < id_cnt; index++){
-       info_str += std::to_string(dynamixel_position[index]); //"%f,",dynamixel_position[index]);
-    }
-    
-    ROS_INFO("syncWrite executed correclty. Message sent: [" + info_str+ "]");
-
-    */
+    #ifdef DEBUG
+      ROS_INFO("Point Counter: %d --- Position Counter: %d", point_cnt, position_cnt);
+    #endif
 
     //position_cnt++;
     //if (position_cnt >= jnt_tra_msg_->points[point_cnt].positions.size())
