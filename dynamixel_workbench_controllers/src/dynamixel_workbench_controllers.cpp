@@ -332,6 +332,7 @@ void DynamixelController::initSubscriber()
 void DynamixelController::initServer()
 {
   dynamixel_command_server_ = priv_node_handle_.advertiseService("dynamixel_command", &DynamixelController::dynamixelCommandMsgCallback, this);
+  cancel_traj_server_ = priv_node_handle_.advertiseService("cancel_joint_trajectory", &DynamixelController::dynamixelCancelTrajectory, this);
 }
 
 void DynamixelController::readCallback(const ros::TimerEvent&)
@@ -765,6 +766,27 @@ bool DynamixelController::dynamixelCommandMsgCallback(dynamixel_workbench_msgs::
 
   return true;
 }
+
+
+
+bool DynamixelController::dynamixelCancelTrajectory(dynamixel_workbench_msgs::DynamixelCommand::Request &req,
+                                                      dynamixel_workbench_msgs::DynamixelCommand::Response &res)
+{
+  is_moving_ = false;
+
+  bool result = true;
+  if (result == false)
+  {
+    ROS_ERROR("Failed to stop trajectory");
+  }
+
+  res.comm_result = result;
+
+  return true;
+}
+
+
+
 
 int main(int argc, char **argv)
 {
